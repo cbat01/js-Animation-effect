@@ -18,6 +18,7 @@
 			margin-bottom: 20px;
 			filter: alpha(opacity:30);/* 针对 IE8 以及更早的版本 */
 			opacity: 0.3;
+			border: 1px solid #000;
 		}
 	</style>
 	<script type="text/javascript">
@@ -33,17 +34,26 @@
 				}
 			}
 		}
+		function getStyle(obj,attr){
+			if(obj.currentStyle){
+				return obj.currentStyle[attr];
+			}
+			else{
+				return getComputedStyle(obj,false)[attr];
+			}
+		}
 		//var timer = null;
 		var alpha = 30;
 		function startMove(obj,iTarget){
 			clearInterval(obj.timer);
 			obj.timer = setInterval(function(){
-				var speed = (iTarget-obj.offsetWidth)/8;
+				var icur = parseInt(getStyle(obj,'width'));
+				var speed = (iTarget-icur)/8;
 				speed = speed > 0?Math.ceil(speed):Math.floor(speed);
-				if(obj.offsetWidth == iTarget){
+				if(icur == iTarget){
 					clearInterval(obj.timer);
 				}else{
-					obj.style.width = obj.offsetWidth + speed + 'px';
+					obj.style.width = icur + speed + 'px';
 				}
 			},30)
 		}
