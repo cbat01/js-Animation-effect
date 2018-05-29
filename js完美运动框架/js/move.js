@@ -8,6 +8,7 @@ function getStyle(obj,attr){
 }
 
 function startMove(obj,json,fn){
+	var flag = true;//假设
 	clearInterval(obj.timer);
 	obj.timer = setInterval(function(){
 		for(var attr in json)
@@ -26,23 +27,26 @@ function startMove(obj,json,fn){
 			speed = speed > 0?Math.ceil(speed):Math.floor(speed);
 	
 			//3.检测停止
-			if(icur == json[attr]){
-				clearInterval(obj.timer);
-				//回调函数
-				if(fn){
-					fn();
-				}
-			}else{
-				if(attr == 'opacity'){
-					obj.style.filter = 'alpha:(opacity:'+(icur + speed)+')';
-					obj.style.opacity = (icur + speed)/100;
-				}
-				else{
-					obj.style[attr] = icur + speed + 'px'; 
-				}
-				
+			if(icur != json[attr])
+			{
+				flag = false;
+			}
+
+			if(attr == 'opacity'){
+				obj.style.filter = 'alpha:(opacity:'+(icur + speed)+')';
+				obj.style.opacity = (icur + speed)/100;
+			}
+			else{
+				obj.style[attr] = icur + speed + 'px'; 
 			}
 		}
-		
+		if(flag)
+		{
+			clearInterval(obj.timer);
+			if(fn)
+			{
+				fn();
+			}
+		}
 	},30)
 }
