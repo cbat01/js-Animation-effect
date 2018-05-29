@@ -8,10 +8,9 @@ function getStyle(obj,attr){
 }
 
 function startMove(obj,json,fn){
-	
+	var flag = true;//假设
 	clearInterval(obj.timer);
 	obj.timer = setInterval(function(){
-		var flag = true;//假设
 		for(var attr in json)
 		{
 			//1.取当前的值
