@@ -23,15 +23,29 @@
 	</style>
 	<script type="text/javascript">
 		window.onload = function(){
-			var aLi = document.getElementsByTagName('li');
-			for(var i = 0;i < aLi.length;i++){
-				aLi[i].timer = null;
-				aLi[i].onmouseover = function(){
-					startMove(this,400);
-				}
-				aLi[i].onmouseout = function(){
-					startMove(this,200);
-				}
+			// var aLi = document.getElementsByTagName('li');
+			// for(var i = 0;i < aLi.length;i++){
+			// 	aLi[i].timer = null;
+			// 	aLi[i].onmouseover = function(){
+			// 		startMove(this,400);
+			// 	}
+			// 	aLi[i].onmouseout = function(){
+			// 		startMove(this,200);
+			// 	}
+			// }
+			var Li1 = document.getElementById('li1');
+			var Li2 = document.getElementById('li2');
+			Li1.onmouseover = function(){
+				startMove(this,'height',400);
+			}
+			Li1.onmouseout = function(){
+				startMove(this,'height',100);
+			}
+			Li2.onmouseover = function(){
+				startMove(this,'width',400);
+			}
+			Li2.onmouseout = function(){
+				startMove(this,'width',200);
 			}
 		}
 		function getStyle(obj,attr){
@@ -44,16 +58,16 @@
 		}
 		//var timer = null;
 		var alpha = 30;
-		function startMove(obj,iTarget){
+		function startMove(obj,attr,iTarget){
 			clearInterval(obj.timer);
 			obj.timer = setInterval(function(){
-				var icur = parseInt(getStyle(obj,'width'));   //改成height可以高度变化
+				var icur = parseInt(getStyle(obj,attr));   //改成height可以高度变化
 				var speed = (iTarget-icur)/8;
 				speed = speed > 0?Math.ceil(speed):Math.floor(speed);
 				if(icur == iTarget){
 					clearInterval(obj.timer);
 				}else{
-					obj.style.width = icur + speed + 'px';     //改成height可以高度变化
+					obj.style[attr] = icur + speed + 'px';     //改成height可以高度变化
 				}
 			},30)
 		}
@@ -61,9 +75,9 @@
 </head>
 <body>
 	<ul>
-		<li></li>
-		<li></li>
-		<li></li>
+		<li id="li1"></li>
+		<li id="li2"></li>
+
 	</ul>
 </body>
 </html>
